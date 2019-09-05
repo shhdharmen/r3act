@@ -1,6 +1,8 @@
 import arg from "arg";
 import inquirer from "inquirer";
 import { createProject } from "./main";
+import chalk from "chalk";
+import figlet from "figlet";
 
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
@@ -78,7 +80,11 @@ async function promptForMissingOptions(options) {
 }
 
 export async function cli(args) {
+  showBanner();
   let options = parseArgumentsIntoOptions(args);
   options = await promptForMissingOptions(options);
   await createProject(options);
+}
+function showBanner() {
+  console.log(chalk.blueBright(figlet.textSync("create-project")));
 }
