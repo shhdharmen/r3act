@@ -1,11 +1,10 @@
 {
-  "name": "@shhdharmen/create-project",
+  "name": "r3act",
   "version": "1.0.0",
   "description": "A CLI to bootstrap my new projects",
   "main": "src/index.js",
   "bin": {
-    "@shhdharmen/create-project": "bin/create-project",
-    "create-project": "bin/create-project"
+    "r3act": "bin/r3act"
   },
   "publishConfig": {
     "access": "public"
@@ -15,13 +14,15 @@
   },
   "keywords": [
     "cli",
-    "create-project"
+    "r3act"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "arg": "^4.1.1",
     "chalk": "^2.4.2",
+    "commander": "^3.0.1",
+    "conf": "^5.0.0",
     "covgen": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.4",

@@ -3,13 +3,13 @@
 ## Getting Started
 
 ```bash
-git clone https://github.com/shhdharmen/create-project.git
-cd create-project
+git clone https://gitlab.com/dharmen1/r3act.git
+cd r3act
 npm i
 npm link
 ```
 
-Then run `create-project` in project directory.
+Then run `r3act` in terminal.
 
 ## Ref
 

@@ -8,6 +8,7 @@ import Listr from "listr";
 import { projectInstall } from "pkg-install";
 import gitignore from "gitignore";
 import license from "spdx-license-list/licenses/MIT";
+import Conf from "conf";
 
 const access = promisify(fs.access);
 const writeFile = promisify(fs.writeFile);
@@ -18,6 +19,14 @@ async function copyTemplateFiles(options) {
   return copy(options.templateDirectory, options.targetDirectory, {
     clobber: false
   });
+}
+
+async function createConfFile(options) {
+  const config = new Conf({
+    cwd: options.targetDirectory,
+    configName: "r3act"
+  });
+  config.set("key", "value");
 }
 
 async function createGitignore(options) {
@@ -52,7 +61,7 @@ async function initGit(options) {
 export async function createProject(options) {
   options = {
     ...options,
-    targetDirectory: options.targetDirectory || process.cwd(),
+    targetDirectory: path.join(process.cwd(), options.projectName),
     email: "hi@shhdharmen.com",
     name: "Dharmen Shah"
   };
@@ -75,8 +84,12 @@ export async function createProject(options) {
   const tasks = new Listr(
     [
       {
-        title: "Copy project files",
+        title: "Make project dir and copy project files",
         task: () => copyTemplateFiles(options)
+      },
+      {
+        title: "Create conf file",
+        task: () => createConfFile(options)
       },
       {
         title: "Create gitignore",
@@ -98,7 +111,7 @@ export async function createProject(options) {
             cwd: options.targetDirectory
           }),
         skip: () =>
-          !options.runInstall
+          !options.install
             ? "Pass --install to automatically install dependencies"
             : undefined
       }
