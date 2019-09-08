@@ -20,7 +20,9 @@
   "license": "ISC",
   "dependencies": {
     "arg": "^4.1.1",
+    "boxen": "^4.1.0",
     "chalk": "^2.4.2",
+    "clui": "^0.3.6",
     "commander": "^3.0.1",
     "conf": "^5.0.0",
     "covgen": "^3.1.0",
@@ -38,5 +40,14 @@
     "bin/",
     "src/",
     "templates/"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "standard": "^14.1.0"
+  }
 }

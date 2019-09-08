@@ -1,5 +1,5 @@
 {
-  "name": "typescript-template",
+  "name": "[PROJECT-NAME]",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -9,8 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Dharmen Shah <shhdharmen@gmail.com>",
-  "license": "MIT",
+  "author": "[AUTHOR-NAME] <[AUTHOR-EMAIL]>",
   "devDependencies": {
     "typescript": "^3.3.3333"
   }
