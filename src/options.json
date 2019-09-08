@@ -2,7 +2,11 @@
   "commands":{
     "new":{
       "license": false,
-      "style": "css"
+      "style": "css",
+      "eslint": false,
+      "flow": false
+    },
+    "generate":{
     }
   }
 }

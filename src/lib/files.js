@@ -12,5 +12,13 @@ module.exports = {
     } catch (err) {
       return false
     }
+  },
+
+  isR3actProject: filePath => {
+    try {
+      return fs.statSync(path.join(filePath, 'r3act.json')).isFile()
+    } catch (err) {
+      return false
+    }
   }
 }

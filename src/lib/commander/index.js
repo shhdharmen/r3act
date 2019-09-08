@@ -1,5 +1,6 @@
 import program from 'commander'
 import { prepareNewCommand } from './new.command.js'
+import { prepareGenerateCommand } from './generate.command.js'
 const packageJson = require('../../../package.json')
 
 export async function prepareCommander (rawArgs) {
@@ -14,6 +15,10 @@ export async function prepareCommander (rawArgs) {
   // Create a project
   // $ r3act new [project-name] [options]
   await prepareNewCommand(rawArgs)
+
+  // Generate a component
+  // $ r3act generate [schematic] [options]
+  await prepareGenerateCommand(rawArgs)
 
   // allow commander to parse `process.argv`
   program.parse(rawArgs)
