@@ -14,7 +14,7 @@ export async function createConfFile (options) {
     cwd: options.targetDirectory,
     configName: 'r3act'
   })
-  config.set('key', 'value')
+  config.set('style', options.style)
 }
 
 export async function createGitignore (options) {
@@ -42,5 +42,12 @@ export async function initGit (options) {
   })
   if (result.failed) {
     return Promise.reject(new Error('Failed to initialize git'))
+  }
+}
+
+export async function initReactProject (options) {
+  const result = await execa('npx', ['create-react-app@3.1.1', options.projectName])
+  if (result.failed) {
+    return Promise.reject(new Error('Failed to initialize react project'))
   }
 }

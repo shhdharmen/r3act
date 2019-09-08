@@ -1,8 +1,8 @@
 {
-  "authorEmail": "hi@shhdharmen.com",
-  "authorName": "Dharmen Shah",
-  "git": false,
-  "template": "Javascript",
-  "install": false,
-  "license": false
+  "commands":{
+    "new":{
+      "license": false,
+      "style": "css"
+    }
+  }
 }

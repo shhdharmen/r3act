@@ -1,29 +1,16 @@
 import program from 'commander'
 import inquirer from 'inquirer'
-import { createProject } from '../main'
-const packageJson = require('../../package.json')
-const defaultOptions = require('../options.json')
+import { createProject } from '../../commands/new'
+import chalk from 'chalk'
+const defaultOptions = require('../../options.json').commands.new
 
-export async function prepareCommander (rawArgs) {
-  program
-    .version(packageJson.version)
-    .description('A CLI for React')
-    .usage('<command> [options]')
-    .on('--help', () => {
-      console.log('')
-    })
-  // Create a project
-  // $ create-project init projectName [arguments]
+export async function prepareNewCommand (rawArgs) {
   program
     .command('new [project-name]') // projectName = name, optional, if not provided, we will ask
     .description('Create a project')
     .usage('[project-name] [options]')
     .option('-y, --skip-prompts', 'Use defaults', false)
-    .option('-i, --install', 'Install dependencies', defaultOptions.install)
-    .option('-g, --git', 'Initialize git repo', defaultOptions.git)
     .option('-l, --license', 'Create MIT License', defaultOptions.license)
-    .option('--author-name [author-name]', 'Author name', defaultOptions.authorName)
-    .option('--author-email [author-email]', 'Author email', defaultOptions.authorEmail)
     .action(async function (projectName, args) {
       let options = Object.assign({}, args)
       if (!projectName) {
@@ -31,7 +18,7 @@ export async function prepareCommander (rawArgs) {
         questions.push({
           type: 'input',
           name: 'projectName',
-          message: 'What is project name?',
+          message: chalk.bold('What name would you like to use for new project?'),
           validate: input => {
             if (!input) {
               return 'Please provide project name.'
@@ -52,28 +39,18 @@ export async function prepareCommander (rawArgs) {
       options = Object.assign(options, rawArgs)
       await createProject(options)
     })
-
-  // allow commander to parse `process.argv`
-  program.parse(rawArgs)
-
-  if (!rawArgs.slice(2).length) {
-    program.outputHelp()
-    console.log('')
-  }
 }
-
 async function promptForMissingOptions () {
   const questions = []
   questions.push({
     type: 'list',
-    name: 'template',
-    message: 'Please choose which project template to use',
-    choices: ['JavaScript', 'TypeScript'],
-    default: defaultOptions.template
+    name: 'style',
+    message: chalk.bold('Which stylesheet format would you like to use?'),
+    choices: ['CSS', 'SCSS [https://sass-lang.com/documentation/syntax#scss]'],
+    default: defaultOptions.style.toUpperCase()
   })
-
   const answers = await inquirer.prompt(questions)
   return {
-    template: answers.template
+    style: answers.style.split(' ')[0].toLowerCase()
   }
 }

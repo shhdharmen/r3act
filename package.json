@@ -1,9 +1,10 @@
 {
-  "name": "r3act",
+  "name": "@shhdharmen/r3act",
   "version": "1.0.0",
   "description": "A CLI to bootstrap my new projects",
   "main": "src/index.js",
   "bin": {
+    "@shhdharmen/r3act": "bin/r3act",
     "r3act": "bin/r3act"
   },
   "publishConfig": {
@@ -16,8 +17,8 @@
     "cli",
     "r3act"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Dharmen Shah",
+  "license": "MIT",
   "dependencies": {
     "arg": "^4.1.1",
     "boxen": "^4.1.0",
