@@ -1,53 +1,58 @@
-import fs from 'fs'
-import path from 'path'
-import gitignore from 'gitignore'
-import license from 'spdx-license-list/licenses/MIT'
-import Conf from 'conf'
-import execa from 'execa'
-import { promisify } from 'util'
+import fs from "fs";
+import path from "path";
+import license from "spdx-license-list/licenses/MIT";
+import Conf from "conf";
+import execa from "execa";
+import ncp from "ncp";
+import { promisify } from "util";
+import { projectInstall } from "pkg-install";
 
-const writeFile = promisify(fs.writeFile)
-const writeGitignore = promisify(gitignore.writeFile)
+const writeFile = promisify(fs.writeFile);
+const copy = promisify(ncp);
 
-export async function createConfFile (options) {
+export async function createConfFile(options) {
   const config = new Conf({
     cwd: options.targetDirectory,
-    configName: 'r3act'
-  })
-  config.set('style', options.style)
+    configName: "r3act"
+  });
+  config.set("style", options.style);
 }
 
-export async function createGitignore (options) {
-  const file = fs.createWriteStream(
-    path.join(options.targetDirectory, '.gitignore'),
-    { flags: 'a' }
-  )
-  return writeGitignore({
-    type: 'Node',
-    file: file
-  })
-}
-
-export async function createLicense (options) {
-  const targetPath = path.join(options.targetDirectory, 'LICENSE')
+export async function createLicense(options) {
+  const targetPath = path.join(options.targetDirectory, "LICENSE");
   const licenseContent = license.licenseText
-    .replace('<year>', new Date().getFullYear())
-    .replace('<copyright holders>', `${options.authorName} (${options.authorEmail})`)
-  return writeFile(targetPath, licenseContent, 'utf8')
+    .replace("<year>", new Date().getFullYear())
+    .replace(
+      "<copyright holders>",
+      `${options.authorName} (${options.authorEmail})`
+    );
+  return writeFile(targetPath, licenseContent, "utf8");
 }
 
-export async function initGit (options) {
-  const result = await execa('git', ['init'], {
+export async function initGit(options) {
+  const result = await execa("git", ["init"], {
     cwd: options.targetDirectory
-  })
+  });
   if (result.failed) {
-    return Promise.reject(new Error('Failed to initialize git'))
+    return Promise.reject(new Error("Failed to initialize git"));
   }
 }
 
-export async function initReactProject (options) {
-  const result = await execa('npx', ['create-react-app@3.1.1', options.projectName])
+export async function initReactProject(options) {
+  await copyTemplateFiles(options);
+}
+
+async function copyTemplateFiles(options) {
+  return copy(options.templateDirectory, options.targetDirectory, {
+    clobber: false
+  });
+}
+
+export async function installDependencies(options) {
+  const result = await execa("npm", ["i"], {
+    cwd: options.targetDirectory
+  });
   if (result.failed) {
-    return Promise.reject(new Error('Failed to initialize react project'))
+    return Promise.reject(new Error("Failed to install dependencies"));
   }
 }

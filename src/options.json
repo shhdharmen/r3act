@@ -1,12 +1,12 @@
 {
-  "commands":{
-    "new":{
+  "commands": {
+    "new": {
       "license": false,
       "style": "css",
       "eslint": false,
-      "flow": false
+      "flow": false,
+      "template": "javascript"
     },
-    "generate":{
-    }
+    "generate": {}
   }
 }

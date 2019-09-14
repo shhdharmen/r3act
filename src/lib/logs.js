@@ -1,16 +1,16 @@
-import chalk from 'chalk'
+import chalk from "chalk";
 
 export default {
   error: msg => {
-    console.log(chalk.red(chalk.bold('ERROR: ') + msg))
+    console.log(chalk.red(chalk.bold("ERROR: ") + msg));
   },
   info: msg => {
-    console.log(chalk.white(chalk.bold('INFO: ') + msg))
+    console.log(chalk.white(chalk.bold("INFO: ") + msg));
   },
   help: msg => {
-    console.log(chalk.blueBright(chalk.bold('TIP: ') + msg))
+    console.log(chalk.blueBright(chalk.bold("TIP: ") + msg));
   },
   success: msg => {
-    console.log(chalk.greenBright(chalk.bold('SUCCESS: ') + msg))
+    console.log(chalk.greenBright(chalk.bold("SUCCESS: ") + msg));
   }
-}
+};

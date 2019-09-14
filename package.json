@@ -11,7 +11,11 @@
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --check \"src/**/*.js\"",
+    "eslint": "eslint src/**/*.js",
+    "lint": "npm run prettier && npm run eslint",
+    "fix-code": "npm run prettier -- --write && npm run eslint -- --fix"
   },
   "keywords": [
     "cli",
@@ -44,11 +48,14 @@
   ],
   "devDependencies": {
     "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "prettier": "^1.18.2",
     "standard": "^14.1.0"
   }
 }
