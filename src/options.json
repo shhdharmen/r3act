@@ -5,7 +5,8 @@
       "style": "css",
       "eslint": false,
       "flow": false,
-      "template": "javascript"
+      "template": "javascript",
+      "routing": false
     },
     "generate": {}
   }

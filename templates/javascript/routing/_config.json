@@ -1,0 +1,5 @@
+{
+  "template": "routing",
+  "tasks": ["copyFiles", "installDependencies"],
+  "dependencies": ["react-router-dom@5.0.1"]
+}

@@ -24,7 +24,6 @@ export async function createProject(options) {
     options.template.toLowerCase()
   );
   options.templateDirectory = templateDir;
-  console.log(templateDir);
 
   const tasks = new Listr(
     [
@@ -37,20 +36,20 @@ export async function createProject(options) {
         task: () => createConfFile(options)
       },
       {
-        title: "Create License",
-        task: () => createLicense(options),
-        skip: () =>
-          !options.license
-            ? "Pass --license to automatically create MIT license"
-            : undefined
-      },
-      {
         title: "Update files",
         task: () => updateFiles(options)
       },
       {
         title: "Install dependencies",
         task: () => installDependencies(options)
+      },
+      {
+        title: "Create License",
+        task: () => createLicense(options),
+        skip: () =>
+          !options.license
+            ? "Pass --license to automatically create MIT license"
+            : undefined
       },
       {
         title: "Initialize Git",

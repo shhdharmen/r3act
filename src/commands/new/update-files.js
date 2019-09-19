@@ -1,6 +1,7 @@
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
+import { TASKS } from "./tasks";
 
 const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
@@ -8,6 +9,7 @@ const readFile = promisify(fs.readFile);
 export async function updateFiles(options) {
   await updateReadmeFile(options);
   await updatePackageFile(options);
+  await updateTemplateFiles(options);
 }
 
 async function updateReadmeFile(options) {
@@ -28,4 +30,35 @@ async function updatePackageFile(options) {
     options.projectName
   );
   return writeFile(packagePath, packageContent);
+}
+
+async function updateTemplateFiles(options) {
+  if (options.style === "scss") {
+    const configString = await readFile(
+      path.join(options.templateDirectory, "scss", "_config.json"),
+      { encoding: "utf8" }
+    );
+    const config = JSON.parse(configString);
+    await performActions(options, config);
+  }
+  if (options.routing) {
+    const configString = await readFile(
+      path.join(options.templateDirectory, "routing", "_config.json"),
+      { encoding: "utf8" }
+    );
+    const config = JSON.parse(configString);
+    await performActions(options, config);
+  }
+}
+
+async function performActions(options, config) {
+  const tasks = {
+    copyFiles: () => TASKS.copyFiles(options, config.template),
+    renameCSSFiles: () => TASKS.renameCSSFiles(options),
+    installDependencies: () =>
+      TASKS.installDependencies(options, config.dependencies)
+  };
+  config.tasks.forEach(taskName => {
+    tasks[taskName]();
+  });
 }

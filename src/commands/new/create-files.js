@@ -5,7 +5,6 @@ import Conf from "conf";
 import execa from "execa";
 import ncp from "ncp";
 import { promisify } from "util";
-import { projectInstall } from "pkg-install";
 
 const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
@@ -16,6 +15,7 @@ export async function createConfFile(options) {
     configName: "r3act"
   });
   config.set("style", options.style);
+  config.set("routing", options.routing);
 }
 
 export async function createLicense(options) {
@@ -42,10 +42,14 @@ export async function initReactProject(options) {
   await copyTemplateFiles(options);
 }
 
-async function copyTemplateFiles(options) {
-  return copy(options.templateDirectory, options.targetDirectory, {
-    clobber: false
-  });
+function copyTemplateFiles(options) {
+  return copy(
+    path.join(options.templateDirectory, "basic"),
+    options.targetDirectory,
+    {
+      clobber: false
+    }
+  );
 }
 
 export async function installDependencies(options) {

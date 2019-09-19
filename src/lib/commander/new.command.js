@@ -49,13 +49,25 @@ async function promptForMissingOptions() {
     type: "list",
     name: "style",
     message: chalk.bold("Which stylesheet format would you like to use?"),
-    choices: ["CSS", "SCSS [https://sass-lang.com/documentation/syntax#scss]"],
+    choices: [
+      { name: "CSS", value: "css" },
+      {
+        name: "SCSS [https://sass-lang.com/documentation/syntax#scss]",
+        value: "scss"
+      }
+    ],
     default: defaultOptions.style.toUpperCase()
   });
-  const { style } = await inquirer.prompt(questions);
+  questions.push({
+    type: "confirm",
+    name: "routing",
+    message: chalk.bold("Would you like to enable routing?")
+  });
+  const { style, routing } = await inquirer.prompt(questions);
   const template = defaultOptions.template;
   return {
+    template,
     style,
-    template
+    routing
   };
 }
